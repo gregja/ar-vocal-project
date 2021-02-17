@@ -1,0 +1,40 @@
+<script>
+    const username = "{{param.username}}";
+    const lang_std = "{{param.lang_std}}";
+    const context = "{{context}}";
+    const title_id = "{{title_id}}";
+</script>
+<h1>{{title}}</h1>
+<ol id="choices_area">
+    {{#each choices}}
+        <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
+    {{/each}}
+</ol>
+<br>
+{{#if title_id}}
+    <div id="title_infos">Title ID : {{title_id}}</div>
+{{else}}
+    <div id="title_infos"></div>
+{{/if}}
+<br>
+<fieldset><legend>Audio Reader</legend>
+<div id="audioreader">
+    <audio controls data-id="myAudio">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <button class="button" data-btn="stop"> &#9830; </button>
+    <button class="button" data-btn="play"> &#x25B6; </button>
+    <button class="button" data-btn="pause"> || </button>
+    <button class="button" data-btn="skipBack"> << </button>
+    <button class="button" data-btn="skipAhead"> >> </button>
+    <button class="button" data-btn="volumeUp">vol.+</button>
+    <button class="button" data-btn="VolumeDown">vol.-</button>
+</div>
+</fieldset>
+<br>
+<fieldset><legend>Help/Aide</legend>
+<div id="informations">
+</div>
+</fieldset><br>
+<script src="/modules/audioReader.mjs" type="module"></script>

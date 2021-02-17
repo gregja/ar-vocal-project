@@ -1,0 +1,20 @@
+<script>
+    const username = "{{param.username}}";
+    const lang_std = "{{param.lang_std}}";
+    const context = "{{context}}";
+    const search_limit = {{param.search_limit}};
+</script>
+<h1>{{title}}</h1>
+<ol id="choices_area">
+    {{#each choices}}
+        <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
+    {{/each}}
+</ol>
+<div id="info_area"></div>
+<div id="search_area"></div><br><br>
+<fieldset><legend>Help/Aide</legend>
+    <div id="informations">
+    </div>
+</fieldset><br>
+<script src="/javascripts/alasql/alasql.js"></script>
+<script src="/modules/searching.mjs" type="module"></script>

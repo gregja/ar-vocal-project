@@ -1,0 +1,82 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "home",
+      "type": "menu",
+      "path": "",
+      "url" : "/",
+      "keyword": "home",
+      "active": true,
+      "parsing": false
+    },
+    {
+      "id": 1,
+      "name": "podcasts",
+      "type": "podcast",
+      "path": "C:/Users/grego/Documents/podcasts",
+      "url" : "/searching/podcast",
+      "keyword": "listen_podcast",
+      "active": true,
+      "parsing": true,
+      "jsonServer": {
+        "port": 3001
+      }
+    },
+    {
+      "id": 2,
+      "name": "music",
+      "type": "music",
+      "path": "C:/Users/xxx/Documents/Music/",
+      "url" : "/searching/music",
+      "keyword": "listen_music",
+      "active": false,
+      "parsing": false
+    },
+    {
+      "id": 3,
+      "name": "audiobooks",
+      "type": "audiobook",
+      "keyword": "listen_audiobook",
+      "path": "",
+      "url" : "/searching/audiobook",
+      "active": false,
+      "parsing": false
+    },
+    {
+      "id": 10,
+      "name": "audioreader (test)",
+      "type": "audioreader",
+      "keyword": "test_audioreader",
+      "path": "",
+      "url" : "/audioreader",
+      "active": false,
+      "parsing": false
+    },
+    {
+      "id": 11,
+      "name": "test Speech Synthesis",
+      "type": "test",
+      "keyword": "test_speechsynthesis",
+      "path": "",
+      "url" : "/testspeech1",
+      "active": false,
+      "parsing": false
+    },
+    {
+      "id": 12,
+      "name": "test Voice Recognition",
+      "type": "test",
+      "keyword": "test_voicerecognition",
+      "path": "",
+      "url" : "/testspeech2",
+      "active": false,
+      "parsing": false
+    }
+  ],
+  "param": {
+    "username": "Michel",
+    "lang_std": "fr-FR",
+    "search_limit": 5
+  }
+}

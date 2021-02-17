@@ -1,0 +1,158 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('bretproject:server');
+var http = require('http');
+
+const {getConfig} = require('../library/fileTools.js');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port, () => console.log(`Express server ready on port ${port}`));
+server.on('error', onError);
+server.on('listening', onListening);
+
+/*************************************************************************/
+/*         START JSON SERVER(s), in parallel with the Express server     */
+/*
+  Tips :
+  - to install the json-server package
+      sudo npm install -g json-server
+  - to open the port XXXX on Rapsbian :
+     sudo apt install ufw
+     sudo ufw allow XXXX
+     sudo reboot
+ */
+const { exec } = require('child_process');
+const listJsonServers = getConfig().categories.filter(item => item.jsonServer);
+
+listJsonServers.forEach(server => {
+  const cmdjsonsvr = "json-server --watch datas/podcast.json --port "+server.jsonServer.port;
+  console.log(cmdjsonsvr)
+  const ls = exec(cmdjsonsvr, function (error, stdout, stderr) {
+    if (error) {
+      console.error(error.stack);
+      console.error('Error code: '+error.code);
+      console.error('Signal received: '+error.signal);
+    }
+    console.log('Child Process STDOUT: '+stdout);
+    console.log('Child Process STDERR: '+stderr);
+  });
+
+  ls.on('exit', function (code) {
+    console.log('Child process exited with exit code '+code);
+  });
+})
+
+
+/****************************************************/
+/*                 STARTING BROWSER                 */
+
+let chrome_path = "";
+if (process.platform == "win32") {
+  chrome_path = "cd C:\\Program Files (x86)\\Google\\Chrome\\Application && chrome.exe";
+} else {
+  chrome_path = "/usr/bin/chromium-browser"
+}
+
+const app_shortcut = "http://localhost:"+port;
+const chrome_cmd = chrome_path + " --autoplay-policy=no-user-gesture-required --profile-directory=Default --app="+app_shortcut;
+
+// chromium parameters interesting to know (maybe to use later if needed)
+// su - pi -c "/usr/bin/chromium-browser --noerordialogs --disable-session-crashed-bubble --disable-infobars &"
+
+const chrome = exec(chrome_cmd, function (error, stdout, stderr) {
+  if (error) {
+    console.error(error.stack);
+    console.error('Error code: '+error.code);
+    console.error('Signal received: '+error.signal);
+  }
+  console.log('Child Process STDOUT: '+stdout);
+  console.log('Child Process STDERR: '+stderr);
+});
+
+chrome.on('exit', function (code) {
+  console.log('Child process exited with exit code '+code);
+});
+
+
+/*******************************************/
+/*               TOOLS                     */
+
+/**
+ * Normalize a port into a number, string, or false.
+ * @param val
+ * @returns {boolean|number|*}
+ */
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ * @param error
+ */
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

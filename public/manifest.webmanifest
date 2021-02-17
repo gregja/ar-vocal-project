@@ -1,0 +1,21 @@
+{
+  "name": "BretProject",
+  "description": "MP3 reader with Web Speech and Voice Recognitionn APIs",
+  "launch_path": "/",
+  "start_url": "/audiotester",
+  "icons": {
+  },
+  "developer": {
+    "name": "Gregory Jarrige",
+    "url": "https://github.com/gregja/"
+  },
+  "default_locale": "fr",
+  "permissions": {
+    "audio-capture" : {
+      "description" : "Audio capture"
+    },
+    "speech-recognition" : {
+      "description" : "Speech recognition"
+    }
+  }
+}

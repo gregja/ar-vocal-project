@@ -1,0 +1,30 @@
+{
+  "name": "ar-vocal-project",
+  "version": "1.0.0",
+  "description": "AR Vocal Project is an audio reader drived by Voice Recognition",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "alasql": "^0.6.5",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "hbs": "^4.1.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "node-id3": "^0.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregja/ar-vocal-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregja/ar-vocal-project/issues"
+  },
+  "homepage": "https://github.com/gregja/ar-vocal-project#readme"
+}

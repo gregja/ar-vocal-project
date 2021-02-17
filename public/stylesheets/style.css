@@ -1,0 +1,47 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 50px;
+  font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(200, 200, 200);
+  letter-spacing: 1px;
+  font-family: sans-serif;
+}
+caption {
+  padding: 10px;
+  caption-side: bottom;
+}
+thead, tfoot {
+  background-color: #3f87a6;
+  color: #fff;
+}
+tbody {
+  background-color: #e4f0f5;
+}
+td, th {
+  border: 1px solid rgb(190, 190, 190);
+  padding: 5px 10px;
+}
+td {
+  text-align: center;
+}
+.menu > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu > li {
+  display: inline;
+}

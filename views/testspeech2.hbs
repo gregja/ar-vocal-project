@@ -1,0 +1,91 @@
+<style>
+    body, html {
+        margin: 0;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: inherit;
+        overflow: hidden;
+    }
+
+    h1, p {
+        font-family: sans-serif;
+        text-align: center;
+    }
+
+    div p {
+        padding: 20px;
+        background-color: rgba(0,0,0,0.2);
+    }
+
+    .txt, form > div {
+        margin-bottom: 10px;
+        overflow: auto;
+    }
+    .clearfix {
+        clear: both;
+    }
+    #phrase {
+        width: 60%;
+    }
+
+    .controls {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .controls button {
+        padding: 10px;
+    }
+
+    .phrase {
+        font-weight: bold;
+    }
+
+    .output {
+        font-style: italic;
+    }
+</style>
+
+<h1>{{title}}</h1>
+<p>Be careful : The menu of this page test is not vocally drived</p>
+<ol id="choices_area">
+    {{#each choices}}
+        <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
+    {{/each}}
+</ol>
+<form>
+    <div class="controls">
+        <label>Phrase test
+            <input id="phrase" type="text" placeholder="type the phrase you want to test with voice recognition">
+        </label>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="controls">
+        <label>Choose the language
+            <select>
+            </select>
+        </label>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="controls">
+        <p>Press the button then say the phrase to test the recognition.</p>
+        <button id="record" type="submit">Start new test</button>
+        <div class="clearfix"></div>
+    </div>
+
+    <div class="controls">
+        <p class="phrase">Phrase...</p>
+        <div class="clearfix"></div>
+        <p class="result">Right or wrong?</p>
+        <div class="clearfix"></div>
+        <p class="output">...diagnostic messages</p>
+    </div>
+
+</form>
+<script src="/modules/testspeech2.mjs" type="module"></script>
