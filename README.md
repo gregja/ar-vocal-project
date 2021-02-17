@@ -45,6 +45,11 @@ The "search_limit" can be increased... make your own tests ;).
 
 In the "appconfig.json" file, it is possible to activate the items with IDs 10, 11 and 12, to test those options, and check if the Web Speech API works correctly. To to that, just fix the "active" property to "true" (and restart the app).
 
+Before to start the app, you must install globally the package json-server :
+```Javascript 
+npm install -g json-server
+```
+
 To start the app, plug a headphone with microphone, and launch the command below :
 ```Javascript 
 npm run start
