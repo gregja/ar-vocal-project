@@ -26,7 +26,7 @@ You can integrate your own MP3 podcasts, by personalizing the "appconfig.json" f
     }
 ```
 ... then launch this script "catalog.js" to generate your own podcasts database in the "datas" directory :
-```Javascript
+```bash
 cd catalog
 node catalog.js
 ```
@@ -45,7 +45,12 @@ The "search_limit" can be increased... make your own tests ;).
 
 In the "appconfig.json" file, it is possible to activate the items with IDs 10, 11 and 12, to test those options, and check if the Web Speech API works correctly. To to that, just fix the "active" property to "true" (and restart the app).
 
-Before to start the app, you must install globally the package json-server :
+Before to start the app, you must install the local packages (defined in the package.json file) :
+```Javascript 
+npm install 
+```
+
+... and you must install globally the package json-server :
 ```Javascript 
 npm install -g json-server
 ```
@@ -55,6 +60,21 @@ To start the app, plug a headphone with microphone, and launch the command below
 npm run start
 ```
 
+If you use a Linux environment, maybe you'll have some difficulties to start the json-server, because the 3001 port is not open.
+To fix that, you can use this technique :
+```code
+sudo apt get install ufw
+sudo ufw allow 3001
+sudo reboot
+```
+
 If everything works correctly, the browser Chrome will be started automatically and the app will speak to you. 
 
-
+----
+## TODO List : 
+- improve the searching tool :
+    - randomize the list of podcasts (not propose always the XX first files)
+    - register the date of last listening on all podcasts and, during the search, let the choice to ignore (or not) the titles listened yet
+    - add a pagination (for the big lists) drived by voice (for example "list page 2")
+    - add a NLP algorithm (with the project Natural ?) for a better interactivy between the user and the machine
+    
