@@ -187,6 +187,10 @@ function searchingUI (username, lang_std, context) {
         let tbody = document.createElement('tbody');
         dataset.forEach(row => {
             let tr = document.createElement('tr');
+            // avoid redundant data
+            if (row.title.trim() == row.album.trim()) {
+                row.album = '';
+            }
             columns.forEach(col => {
                 let td = document.createElement('td');
                 if (col == ref_column) {

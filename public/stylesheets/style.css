@@ -1,47 +1,70 @@
 html {
-  height: 100%;
-}
-body {
-  min-height: 100%;
-  margin: 0;
-  padding: 50px;
-  font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%;
 }
 
-a {
-  color: #00B7FF;
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 50px;
+    font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 table {
-  border-collapse: collapse;
-  border: 2px solid rgb(200, 200, 200);
-  letter-spacing: 1px;
-  font-family: sans-serif;
+    border-collapse: collapse;
+    border: 2px solid rgb(200, 200, 200);
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
 }
+
 caption {
-  padding: 10px;
-  caption-side: bottom;
+    padding: 10px;
+    caption-side: bottom;
 }
+
 thead, tfoot {
-  background-color: #3f87a6;
-  color: #fff;
+    background-color: #3f87a6;
+    color: #fff;
 }
+
 tbody {
-  background-color: #e4f0f5;
+    background-color: #f0f3f5;
 }
+
 td, th {
-  border: 1px solid rgb(190, 190, 190);
-  padding: 5px 10px;
+    border: 1px solid rgb(190, 190, 190);
+    padding: 5px 10px;
 }
+
 td {
-  text-align: center;
+    text-align: center;
 }
+
 .menu > ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .menu > li {
-  display: inline;
+    display: inline;
 }
+
+a {
+    color: #546141;
+}
+
+fieldset {
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    background-color: #f8f5f0;
+    border-radius: 0.3rem;
+}
+
+#audioreader button {
+    font: 18px Helvetica, Arial, sans-serif;
+    background-color: aliceblue;
+    border-radius: 0.3rem;
+    width: 55px;
+}
+
