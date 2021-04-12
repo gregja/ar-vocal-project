@@ -71,6 +71,14 @@ sudo reboot
 If everything works correctly, the browser Chrome will be started automatically and the app will speak to you. 
 
 ----
+
+NB : I showed that application during the meetup CreativeCodeParis of the March 25th 2021.
+You can watch the replay of this event here : https://youtu.be/7sQ1a7rpULs
+
+I made some improvements on the searching page after this event, so you'll not see this improvemnts on the video; 
+Please read the "changelog.md" file to see the list of improvements.
+
+----
 ## TODO List : 
 - improve the searching tool :
     - add in appconfig.json the initial parameters of the voice (pitch, rate, volume)
