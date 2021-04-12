@@ -50,9 +50,8 @@ function analyseLength(value) {
 
 categories.filter(categ => categ.parsing).forEach(categ => {
 
-    let path = categ.path;   // +'/alan_turing'; // (chemin provisoire pour tests)
-    //let path = "C:\\Users\\grego\\Documents\\Dev\\nodeworks\\bretproject\\mp3files\\alan_turing"; // (chemin provisoire pour tests)
-
+    let path = categ.path;
+    console.log('Path analyzed : '+ path);
     let explore = getFiles(path, '.mp3');
     let max = explore.length;
 

@@ -5,11 +5,13 @@
     const title_id = "{{title_id}}";
 </script>
 <h1>{{title}}</h1>
+<nav>
 <ol id="choices_area">
     {{#each choices}}
         <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
     {{/each}}
 </ol>
+</nav>
 <br>
 {{#if title_id}}
     <div id="title_infos">Title ID : {{title_id}}</div>

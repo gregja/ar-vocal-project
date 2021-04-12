@@ -14,7 +14,7 @@ function getFiles (dir, fileType, files_){
     for (let i in files){
         let file = files[i];
         let name = dir + '/' + file;
-        console.log(name);
+        //console.log(name);
         if (fs.statSync(name).isDirectory()){
             getFiles(name, fileType, files_);
         } else {

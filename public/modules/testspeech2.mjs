@@ -10,7 +10,7 @@ var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEv
 
 import {prepareVoicesList} from "./tools.mjs";
 
-function testspeech2 () {
+function testVoiceRecognition () {
     "use strict";
 
     var default_lang = 'fr-FR';
@@ -59,7 +59,8 @@ function testspeech2 () {
 
     prepareVoicesList(prepareApp);
 
-    function testSpeech() {
+    function testSpeech(evt) {
+        evt.preventDefault();
         testBtn.disabled = true;
         testBtn.textContent = 'Test in progress';
 
@@ -93,7 +94,8 @@ function testspeech2 () {
             // We then return the transcript property of the SpeechRecognitionAlternative object
             let result = event.results[0][0];
             var speechResult = result.transcript.toLowerCase();
-            diagnosticPara.textContent = 'Speech received: ' + speechResult + '.';
+            console.log('Speech received: ' + speechResult );
+            diagnosticPara.textContent = 'Speech received: ' + speechResult ;
             let confidence = Math.ceil(result.confidence * 100);
             if(speechResult === phrase) {
                 resultPara.textContent = `I heard the correct phrase! (confidence : ${confidence} %)`;
@@ -172,5 +174,5 @@ window.addEventListener("DOMContentLoaded", (event) => {
     "use strict";
     console.log("DOM completely loaded");
 
-    testspeech2();
+    testVoiceRecognition();
 });

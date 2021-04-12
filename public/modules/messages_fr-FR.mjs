@@ -9,7 +9,7 @@ export function getMessages_frFR() {
         "min": "minute",
         "sec": "seconde",
         "dur": "La durée du MP3 est de ",
-        "lis": "Vous avez écouté ",
+        "lis": "Tu as écouté ",
         "wlc": "Bienvenue ",
         "wdoywtd": "Que souhaites-tu faire ?",
         "wdoywtl" : "Quel XX souhaites-tu écouter ?",
@@ -45,7 +45,12 @@ export function getMessages_frFR() {
         "test_audioreader": "test audioreader",
         "test_speechsynthesis": "test synthèse vocale",
         "test_voicerecognition": "test reconnaissance vocale",
-        "home": "Accueil"
+        "home": "Accueil",
+        "podcast_select": "Sélection de podcasts",
+        "help": "Aide",
+        "validate": "Valider",
+        "searching": "Recherche",
+        "page": "page"
     };
     return messages;
 }

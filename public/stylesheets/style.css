@@ -31,6 +31,13 @@ tbody {
     background-color: #f0f3f5;
 }
 
+tbody tr:nth-child(even) {
+    background: #f0f3f5
+}
+tbody tr:nth-child(odd) {
+    background: #e1e4e6
+}
+
 td, th {
     border: 1px solid rgb(190, 190, 190);
     padding: 5px 10px;
@@ -66,5 +73,27 @@ fieldset {
     background-color: aliceblue;
     border-radius: 0.3rem;
     width: 55px;
+}
+
+input {
+    font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.pagination {
+    display: block;
+    background-color: #f8f5f0;
+    border-width: 1px;
+    border-style: groove;
+    border-color: threedface;
+    border-radius: 4px;
+}
+
+.pagination a {
+    text-decoration:none;
+}
+.pagination a.active {
+    color: #f8f5f0;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
 }
 

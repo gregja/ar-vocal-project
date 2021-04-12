@@ -8,7 +8,7 @@ const param = config.param;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { param, choices });
+  res.render('index', { param, choices, title:"Audio-Reader Vocal Project" });
 });
 
 module.exports = router;

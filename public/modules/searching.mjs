@@ -1,6 +1,7 @@
 import {prepareVoicesList, speakEasy, reloadPage, helpCommands, getWords, autoclickOnNode,
     getJsonServerURL, replaceAll, capitalize, genLink, emptyDomNode, readMenu, vocalizeMenu,
     displayChoices} from "./tools.mjs";
+import { Pagination, navbarManager } from "./pagination.mjs";
 import {getMessages} from "./messages.mjs";
 import {getActions} from "./actions.mjs";
 
@@ -14,6 +15,7 @@ function searchingUI (username, lang_std, context) {
     const words = getWords(actions);
     const json_server = getJsonServerURL();
     const main_column = "title";
+
     let sqlres = []; // current dataset returned by json-server
     let last_datas = []; // array of the datas loaded by the last search
 
@@ -24,6 +26,12 @@ function searchingUI (username, lang_std, context) {
     const search_area = document.getElementById('search_area');
     if (!search_area) {
         console.error('Dom target not found of ID search_area');
+        return;
+    }
+
+    const navbar_area = document.getElementById('navbar_area');
+    if (!navbar_area) {
+        console.error('Dom target not found of ID navbar_area');
         return;
     }
 
@@ -40,6 +48,33 @@ function searchingUI (username, lang_std, context) {
         return;
     } else {
         vocal_menu = vocalizeMenu(menu_area, messages);
+    }
+
+    const form_area = document.getElementById('search_form');
+    if (!form_area) {
+        console.error('Dom target not found of ID search_form');
+        return;
+    } else {
+        let form = form_area.querySelector('form');
+        let label1 = form.querySelector('[data-role=label1]');
+        label1.innerHTML = messages.searching;
+        let submit = form.querySelector('[data-role=submit]');
+        submit.value = messages.validate;
+
+        form.addEventListener('submit', (evt)=>{
+            evt.preventDefault();
+            let input = form.querySelector('[type=search]');
+            fetchGet(main_column, input.value, responseSearching);
+        }, false);
+    }
+
+    const help_area = document.querySelector('[data-role=help]');
+    if (!help_area) {
+        console.error('Dom target not found of help_area');
+        return;
+    } else {
+        let legend = help_area.querySelector('legend');
+        legend.innerHTML = messages.help;
     }
 
     displayChoices('informations', actions);
@@ -121,9 +156,11 @@ function searchingUI (username, lang_std, context) {
     function describeTitle(idx, ref, main_column, simplified=false) {
         speakEasy(`${messages.choice} ${idx}`, lang_std);
         speakEasy(`${ref[main_column]} `, lang_std);
+        /*
         if (String(ref[main_column]).trim() != String(ref.album).trim()) {
             speakEasy(`${ref.album} `, lang_std);
         }
+         */
         if (simplified) return;
         if (ref.artist) {
             speakEasy(`${messages.animated_by} ${ref.artist} `, lang_std);
@@ -146,13 +183,23 @@ function searchingUI (username, lang_std, context) {
     }
 
     /**
+     * Generate the Pagination bar
+     * @param count_rows
+     */
+    function genBarNav(count_rows) {
+        let current_offset = 1;
+        let barre_pagination = new Pagination(count_rows, current_offset, search_limit, '', {}, true, "pagination");
+        barre_pagination.activateClientSide();
+        return barre_pagination.render();
+    }
+
+    /**
      * Generate a HTML Table using a dataset
-     * @param dom_target
      * @param dataset
      * @param ref_column
      * @param title
      */
-    function genTable(dom_target, dataset, ref_column, title = '') {
+    function genTable(dataset, ref_column, title = '') {
 
         function isNumber(val){
             return typeof val==='number';
@@ -167,6 +214,7 @@ function searchingUI (username, lang_std, context) {
         let columns = Object.keys(dataset[0]).filter(item => isNumber(dataset[0][item]) || isString(dataset[0][item]) );
 
         let table = document.createElement('table');
+        table.setAttribute("role", "presentation")
 
         if (title != '') {
             let caption = document.createElement('caption');
@@ -175,8 +223,10 @@ function searchingUI (username, lang_std, context) {
         }
         let thead = document.createElement('thead');
         let tr0 = document.createElement('tr');
+        tr0.setAttribute("role", "row");
         columns.forEach(col => {
             let th = document.createElement('th');
+            th.setAttribute("role", "columnheader");
             let tmptitle = messages[col]?messages[col]:col;
             th.appendChild(document.createTextNode(capitalize(tmptitle)));
             tr0.appendChild(th);
@@ -187,6 +237,7 @@ function searchingUI (username, lang_std, context) {
         let tbody = document.createElement('tbody');
         dataset.forEach(row => {
             let tr = document.createElement('tr');
+            tr.setAttribute("role", "row");
             // avoid redundant data
             if (row.title.trim() == row.album.trim()) {
                 row.album = '';
@@ -206,7 +257,20 @@ function searchingUI (username, lang_std, context) {
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
-        dom_target.appendChild(table);
+        return table;
+    }
+
+    function readPageContent() {
+        let tbody = search_area.querySelector('tbody').querySelectorAll('[data-status=displayed]');
+        if (tbody.length == 0 ) {
+            speakEasy('Cette page est vide, lance une nouvelle recherche');
+            return;
+        }
+        [...tbody].forEach(row => {
+            let link = row.querySelector('a');
+            let ref = JSON.parse(link.getAttribute('data-json'));
+            describeTitle(ref.choice, ref, main_column, true);
+        })
     }
 
     /**
@@ -215,27 +279,37 @@ function searchingUI (username, lang_std, context) {
      * @param data
      */
     function responseSearching(question, data) {
-        // filter the columns not useful here
+        // reorder rows and columns
         sqlres = alasql(`SELECT id, ${main_column}, album, artist, length, duration FROM ? ORDER BY ${main_column}`, [data] );
         let datas = [];
 
         sqlres.forEach((ref, num) => {
-            if (num < search_limit) {
-                ref[main_column] = cleanTitle(ref[main_column], lang_std);
-                ref.album = cleanTitle(ref.album, lang_std);
-                datas.push(Object.assign({"choice":num+1}, ref));
-            }
+            ref[main_column] = cleanTitle(ref[main_column], lang_std);
+            ref.album = cleanTitle(ref.album, lang_std);
+            datas.push(Object.assign({"choice":num+1}, ref));
         })
+
+        let nb_pages = Math.ceil(data.length / search_limit);
 
         if (datas.length == 0) {
             speakEasy(`${messages.notfound} ${question}`, lang_std);
             speakEasy(messages.newsearch, lang_std);
         } else {
             last_datas = datas;
+            let title = messages.podcast_select;
+            if (nb_pages > 1) {
+                title += ` (${nb_pages} pages)`;
+            }
 
             emptyDomNode(search_area);  // drop the previous HTML Table
+            emptyDomNode(navbar_area);
 
-            genTable(search_area, datas, main_column,'Sélection de podcasts');
+            search_area.appendChild(genTable(datas, main_column, title));
+
+            if (nb_pages > 1) {
+                navbar_area.innerHTML = genBarNav(data.length);
+                navbarManager(navbar_area, search_area, search_limit);
+            }
 
             if (datas.length == 1) {
                 speakEasy(`${messages.find1} ${question}`, lang_std);
@@ -245,9 +319,7 @@ function searchingUI (username, lang_std, context) {
                 if (sqlres.length > search_limit) {
                     speakEasy(messages.firstX.replace('XX', search_limit), lang_std);
                 }
-                datas.forEach(ref => {
-                    describeTitle(ref.choice, ref, main_column, true);
-                })
+                readPageContent();
             }
         }
     }
@@ -298,7 +370,50 @@ function searchingUI (username, lang_std, context) {
             }
             case 'search' : {
                 if (param.parameters.length > 0) {
-                    fetchGet(main_column, param.parameters[param.parameters.length-1], responseSearching)
+                    let value = param.parameters[param.parameters.length-1];
+                    let form = form_area.querySelector('form');
+                    let input = form.querySelector('[type=search]');
+                    input.value = value;
+                    fetchGet(main_column, value, responseSearching);
+                    break;
+                }
+            }
+            case 'prev_page': {
+                let link = navbar_area.querySelector('nav').querySelector('a');
+                link.click();
+                readPageContent();
+                break;
+            }
+            case 'next_page': {
+                let links = navbar_area.querySelector('nav').querySelectorAll('a');
+                // click on the last link
+                links[links.length-1].click();
+                readPageContent();
+                break;
+            }
+            case 'page' : {
+                if (param.parameters.length > 0) {
+                    let value = param.parameters[param.parameters.length-1];
+
+                    // Erk, this patch is dirty, sorry ( TODO : improve that later )
+                    if (value == 'de' && lang_std == "fr-FR") {
+                        value = 2;
+                    }
+
+                    let links = navbar_area.querySelector('nav').querySelectorAll('a');
+                    let pagenum = 1;
+                    for (let i=0, imax=links.length; i<imax; i++) {
+                        let link = links[i];
+                        let offset = link.getAttribute('data-offset');
+                        if (offset != 'prev' && offset != 'next') {
+                            if (String(pagenum) == String(value)) {
+                                link.click();
+                                readPageContent();
+                                break;
+                            }
+                            pagenum++;
+                        }
+                    }
                     break;
                 }
             }

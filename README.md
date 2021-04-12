@@ -73,8 +73,8 @@ If everything works correctly, the browser Chrome will be started automatically 
 ----
 ## TODO List : 
 - improve the searching tool :
+    - add in appconfig.json the initial parameters of the voice (pitch, rate, volume)
     - randomize the list of podcasts (not propose always the XX first files)
     - register the date of last listening on all podcasts and, during the search, let the choice to ignore (or not) the titles listened yet
-    - add a pagination (for the big lists) drived by voice (for example "list page 2")
     - add a NLP algorithm (with the project Natural ?) for a better interactivy between the user and the machine
     

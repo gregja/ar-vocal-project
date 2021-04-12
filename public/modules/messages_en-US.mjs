@@ -45,7 +45,12 @@ export function getMessages_enUS() {
         "test_audioreader": "test audioreader",
         "test_speechsynthesis": "test speech synthesis",
         "test_voicerecognition": "test voice recognition",
-        "home": "home"
+        "home": "home",
+        "podcast_select": "Podcast selection",
+        "help": "Help",
+        "validate": "Validate",
+        "searching": "Searching",
+        "page": "page"
     };
     return messages;
 }

@@ -5,14 +5,25 @@
     const search_limit = {{param.search_limit}};
 </script>
 <h1>{{title}}</h1>
+<nav>
 <ol id="choices_area">
     {{#each choices}}
         <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
     {{/each}}
 </ol>
+</nav>
 <div id="info_area"></div><br>
-<div id="search_area"></div><br><br>
-<fieldset><legend>Help/Aide</legend>
+<div id="search_form">
+    <form>
+        <label><span data-role="label1">Searching</span>&nbsp;&nbsp;<input type="search" value="" /></label>
+        <input type="submit" value="Validate" data-role="submit" />
+    </form><br>
+</div>
+
+<div id="navbar_area"></div><br>
+<div id="search_area"></div><br>
+
+<fieldset data-role="help"><legend>Help/Aide</legend>
     <div id="informations">
     </div>
 </fieldset><br>

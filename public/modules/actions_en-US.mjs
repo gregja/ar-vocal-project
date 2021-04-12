@@ -1,5 +1,7 @@
 /**
- * get the actions defined for the app in english
+ * Get the actions defined for the app in english
+ * WARNING : the order of the actions is important.
+ *   For example, the actions "next_page" and "prev_page" must be placed before the action "page"
  * @param context
  * @returns {({context: string, words: [string], action: string, key: string, desc: string}|{context: string, words: [string], action: string, key: string, desc: string}|{context: string, words: [string], action: string, key: string, desc: string}|{context: string, words: [string], action: string, key: string, desc: string}|{context: string, words: [string, string], action: string, key: string, desc: string})[]}
  */
@@ -19,7 +21,10 @@ export function getActions_enUS(context) {
         {"key":"helpmenu", "context":"all", "desc":"help menu", "words":["help menu"], "action": "helpmenu"},
         {"key":"menu", "context":"all", "desc":"menu (followed by number)", "words":["menu"], "action": "menu", "exception":true},
         {"key":"choice", "context":"searching", "desc":"choice (followed by number)", "words":["choice"], "action": "choice", "exception":true},
-        {"key":"search", "context":"searching", "desc":"search", "words":["search"], "action": "search", "exception":true}
+        {"key":"search", "context":"searching", "desc":"search (followed by keyword(s)", "words":["search"], "action": "search", "exception":true},
+        {"key":"next_page", "context":"searching", "desc":"next page", "words":["next page"], "action": "next_page"},
+        {"key":"prev_page", "context":"searching", "desc":"previous page", "words":["previous page"], "action": "prev_page"},
+        {"key":"page", "context":"searching", "desc":"page (followed by number)", "words":["page"], "action": "page", "exception":true},
     ];
     return actions;
 }

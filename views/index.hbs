@@ -4,12 +4,13 @@
 </script>
 <h1>Audio Reader</h1>
 <div id="info_area"></div>
+<nav role="menu">
 <ol id="choices_area">
     {{#each choices}}
         <li><a data-link="{{this.id}}" data-action="{{this.type}}" href="{{this.url}}" data-keyword="{{this.keyword}}">{{this.name}}</a></li>
     {{/each}}
 </ol>
-
+</nav>
 <fieldset><legend>Help/Aide</legend>
     <div id="informations">
     </div>
