@@ -75,8 +75,8 @@ If everything works correctly, the browser Chrome will be started automatically 
 NB : I showed that application during the meetup CreativeCodeParis of the March 25th 2021.
 You can watch the replay of this event here : https://youtu.be/7sQ1a7rpULs
 
-I made some improvements on the searching page after this event, so you'll not see this improvemnts on the video; 
-Please read the "changelog.md" file to see the list of improvements.
+I made some improvements on the searching page after this event, so you'll not see those improvements on the video; 
+The list of improvements is detailed in the "changelog.md" file.
 
 ----
 ## TODO List : 

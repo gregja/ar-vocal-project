@@ -238,6 +238,7 @@ function searchingUI (username, lang_std, context) {
         dataset.forEach(row => {
             let tr = document.createElement('tr');
             tr.setAttribute("role", "row");
+            tr.setAttribute("data-status", "displayed");
             // avoid redundant data
             if (row.title.trim() == row.album.trim()) {
                 row.album = '';
@@ -263,7 +264,7 @@ function searchingUI (username, lang_std, context) {
     function readPageContent() {
         let tbody = search_area.querySelector('tbody').querySelectorAll('[data-status=displayed]');
         if (tbody.length == 0 ) {
-            speakEasy('Cette page est vide, lance une nouvelle recherche');
+            speakEasy(messages.page_empty);
             return;
         }
         [...tbody].forEach(row => {

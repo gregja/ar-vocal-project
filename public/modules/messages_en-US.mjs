@@ -50,7 +50,8 @@ export function getMessages_enUS() {
         "help": "Help",
         "validate": "Validate",
         "searching": "Searching",
-        "page": "page"
+        "page": "page",
+        "page_empty": "This page is empty, please start a new search"
     };
     return messages;
 }

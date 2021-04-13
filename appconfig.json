@@ -50,7 +50,7 @@
       "keyword": "test_audioreader",
       "path": "",
       "url" : "/audioreader",
-      "active": false,
+      "active": true,
       "parsing": false
     },
     {

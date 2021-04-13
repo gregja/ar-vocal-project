@@ -50,7 +50,8 @@ export function getMessages_frFR() {
         "help": "Aide",
         "validate": "Valider",
         "searching": "Recherche",
-        "page": "page"
+        "page": "page",
+        "page_empty": "Cette page est vide, lance une nouvelle recherche"
     };
     return messages;
 }
