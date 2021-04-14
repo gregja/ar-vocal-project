@@ -1,8 +1,11 @@
 <script>
-    const username = "{{param.username}}";
-    const lang_std = "{{param.lang_std}}";
+    // Create a global to inject in the client some parameters from the server
+    const global = {};
+    global.username = "{{param.username}}";
+    global.lang_std = "{{param.lang_std}}";
+    console.log(global);
 </script>
-<h1>Audio Reader</h1>
+<h1>{{title}}</h1>
 <div id="info_area"></div>
 <nav role="menu">
 <ol id="choices_area">

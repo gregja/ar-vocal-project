@@ -2,10 +2,11 @@ import {prepareVoicesList, speakEasy, reloadPage, helpCommands, getWords, autocl
     getJsonServerURL, replaceAll, capitalize, genLink, emptyDomNode, readMenu, vocalizeMenu,
     displayChoices} from "./tools.mjs";
 import { Pagination, navbarManager } from "./pagination.mjs";
+import { fixRecognition } from "./fixRecognition.mjs";
 import {getMessages} from "./messages.mjs";
 import {getActions} from "./actions.mjs";
 
-function searchingUI (username, lang_std, context) {
+function searchingUI (username, lang_std, search_limit, context) {
     "use strict";
 
     const link_reader = "http://localhost:3000/audioreader/";
@@ -344,7 +345,7 @@ function searchingUI (username, lang_std, context) {
                 let value = "";
                 if (param.parameters.length > 0) {
                     // artibrary choice to take the last item of the array
-                    value = param.parameters[param.parameters.length-1];
+                    value = fixRecognition(param.parameters[param.parameters.length-1], lang_std);
                 }
                 if (value != "") {
                     let tmpres = alasql(`SELECT * FROM ? WHERE choice = ?`, [last_datas, parseInt(value)] );
@@ -394,12 +395,7 @@ function searchingUI (username, lang_std, context) {
             }
             case 'page' : {
                 if (param.parameters.length > 0) {
-                    let value = param.parameters[param.parameters.length-1];
-
-                    // Erk, this patch is dirty, sorry ( TODO : improve that later )
-                    if (value == 'de' && lang_std == "fr-FR") {
-                        value = 2;
-                    }
+                    let value = fixRecognition(param.parameters[param.parameters.length-1], lang_std);
 
                     let links = navbar_area.querySelector('nav').querySelectorAll('a');
                     let pagenum = 1;
@@ -420,7 +416,7 @@ function searchingUI (username, lang_std, context) {
             }
             case 'menu': {
                 if (param.parameters.length > 1) {
-                    autoclickOnNode(menu_area, param.parameters[1]);
+                    autoclickOnNode(menu_area, fixRecognition(param.parameters[1], lang_std));
                     break;
                 }
             }
@@ -515,7 +511,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         // drop the event listener because we want to launch it only once
         document.body.removeEventListener('click', startPage, false);
         // start the audio reader
-        searchingUI(username, lang_std, context);
+        searchingUI(global.username, global.lang_std, global.search_limit, global.context);
     }
 
     document.body.addEventListener('click', startPage, false);

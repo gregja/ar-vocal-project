@@ -1,15 +1,16 @@
 import {prepareVoicesList, speakEasy, vocalizeMenu, readMenu, displayChoices, getInfos, reloadPage, getWords,
     helpCommands, emptyDomNode, autoclickOnNode, createAudioSource, capitalize} from "./tools.mjs";
+import { fixRecognition } from "./fixRecognition.mjs";
 import {getMessages} from "./messages.mjs";
 import {getActions} from "./actions.mjs";
 
-function audioReader (domtarget, lang_std) {
+function audioReader (domtarget, lang_std, title_id, current_context ) {
     "use strict";
 
-    const current_context = "reader";
+    const current_mode = "reader";
     let current_title = {};
     const messages = getMessages(lang_std);
-    const actions = getActions(lang_std, current_context);
+    const actions = getActions(lang_std, current_mode);
     const words = getWords(actions);
 
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -287,7 +288,7 @@ function audioReader (domtarget, lang_std) {
             }
             case 'menu': {
                 if (param.parameters.length > 1) {
-                    autoclickOnNode(menu_area, param.parameters[1]);
+                    autoclickOnNode(menu_area, fixRecognition(param.parameters[1], lang_std));
                     break;
                 }
             }
@@ -356,7 +357,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         // drop the event listener because we want to launch it only once
         document.body.removeEventListener('click', startPage, false);
         // start the audio reader
-        audioReader('audioreader', lang_std);
+        audioReader('audioreader', global.lang_std, global.title_id, global.context);
     }
 
     document.body.addEventListener('click', startPage, false);

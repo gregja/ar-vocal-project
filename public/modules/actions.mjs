@@ -1,5 +1,5 @@
-import {getActions_frFR} from "./actions_fr-FR.mjs";
-import {getActions_enUS} from "./actions_en-US.mjs";
+import {getActions_frFR} from "../lang/actions_fr-FR.mjs";
+import {getActions_enUS} from "../lang/actions_en-US.mjs";
 
 /**
  * get the actions defined for the app

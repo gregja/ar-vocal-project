@@ -1,5 +1,6 @@
 import {displayChoices, prepareVoicesList, speakEasy, reloadPage, helpCommands, getWords,
     readMenu, vocalizeMenu, autoclickOnNode} from "./tools.mjs";
+import { fixRecognition } from "./fixRecognition.mjs";
 import {getMessages} from "./messages.mjs";
 import {getActions} from "./actions.mjs";
 
@@ -77,7 +78,7 @@ function indexPage (username, lang_std) {
                 let value = "";
                 if (param.parameters.length > 0) {
                     // artibrary choice to take the last item of the array
-                    value = param.parameters[param.parameters.length-1];
+                    value = fixRecognition(param.parameters[param.parameters.length-1], lang_std);
                 }
                 if (value != "") {
                     autoclickOnNode(menu_area, value);
@@ -170,8 +171,6 @@ function indexPage (username, lang_std) {
         }
     }
 
-
-
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -183,7 +182,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         // drop the event listener because we want to launch it only once
         document.body.removeEventListener('click', startPage, false);
         // start the audio reader
-        indexPage(username, lang_std);
+        indexPage(global.username, global.lang_std);
     }
 
     document.body.addEventListener('click', startPage, false);

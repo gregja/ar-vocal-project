@@ -1,5 +1,5 @@
-import {getMessages_frFR} from "./messages_fr-FR.mjs";
-import {getMessages_enUS} from "./messages_en-US.mjs";
+import {getMessages_frFR} from "../lang/messages_fr-FR.mjs";
+import {getMessages_enUS} from "../lang/messages_en-US.mjs";
 
 /**
  * get the messages defined for the app

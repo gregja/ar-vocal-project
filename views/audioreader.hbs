@@ -1,8 +1,10 @@
 <script>
-    const username = "{{param.username}}";
-    const lang_std = "{{param.lang_std}}";
-    const context = "{{context}}";
-    const title_id = "{{title_id}}";
+    // Create a global to inject in the client some parameters from the server
+    const global = {};
+    global.username = "{{param.username}}";
+    global.lang_std = "{{param.lang_std}}";
+    global.context = "{{context}}";
+    global.title_id = "{{title_id}}";
 </script>
 <h1>{{title}}</h1>
 <nav>

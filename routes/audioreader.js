@@ -3,19 +3,24 @@ const router = express.Router();
 
 const {getConfig, getOptions} = require('../library/fileTools.js');
 
+const {getTranslations} = require("../library/translations.js");
+
 const config = getConfig();
 const choices = getOptions(config);
+const param = config.param;
+
+const messages = getTranslations(param.lang_std);
 
 function manageRequest(req, res, next) {
     let context = req.params.context || "podcast";
     let title_id = req.params.id || false;
 
-    let title = 'Audio reader';
+    let title = messages.audioreader_title;
     if (!title_id) {
         title += ' (test mode)';
     }
 
-    res.render('audioreader', {title, param: config.param, choices, context, title_id});
+    res.render('audioreader', {title, param: config.param, choices, title_id});
 }
 
 /* GET users listing. */
